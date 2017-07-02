@@ -15,6 +15,15 @@ function f_seo_text_tool_init(){
     var_dump($type);
     if($type != 'post') return null;
 
+    wp_enqueue_style(
+        'text_tool_style',
+        plugins_url('css/text_tool_style.css', __FILE__),
+        null,
+        F_SEO_TEXT_TOOL_CURRENT_VERSION,
+        'all'
+    );
+    wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, F_SEO_TEXT_TOOL_CURRENT_VERSION);
+
 }
 add_action( 'admin_head', 'f_seo_text_tool_init' );
 
@@ -52,21 +61,34 @@ function register_f_seo_text_tool_settings(){
 
 function add_wp_admin_bar_new_item() {
 
-    if(!is_user_logged_in()) return null;
+    /**
+     * Если пользователь на странице статьи или на странице редактирования статьи, покажем ссылку на WHO
+     */
+    if(isValidTextToolPage()){
+        global $wp_admin_bar;
+        global $post;
+        $text_key = converUrlToKeyName(get_site_url()) . '_' . $post->ID;
 
-    global $wp_admin_bar;
-
-    $wp_admin_bar->add_menu(array(
-        'id' => 'who_tools_seo_link',
-        'title' => __('Анализ текста'),
-        'href' => 'https://workhard.online/tools/seo',
-        'meta' => array(
-            'target' => '_blank',
-            'class' => 'who_link'
-        )
-    ));
+        $wp_admin_bar->add_menu(array(
+            'id' => 'who_tools_seo_link',
+            'title' => __('Анализ текста'),
+            'href' => 'https://workhard.online/tools/seo?text_key=' . $text_key,
+            'meta' => array(
+                'target' => '_blank',
+                'class' => 'who_link'
+            )
+        ));
+    }
 }
 add_action('wp_before_admin_bar_render', 'add_wp_admin_bar_new_item');
+
+function isValidTextToolPage(){
+    if(!is_user_logged_in()) return false;
+    if(is_single()) return true;
+    if(is_admin() && get_current_screen()->base == 'post' ) return true;
+
+    return false;
+}
 
 
 function fseo_tt_get_post_text_by_id(){
@@ -77,3 +99,9 @@ function fseo_tt_get_post_text_by_id(){
 }
 add_action('wp_ajax_fseo_tt_get_post_text_by_id', 'fseo_tt_get_post_text_by_id' );
 
+
+function converUrlToKeyName($url){
+    $converter = ['http://' => '', 'https://' => '', '.' => '_'];
+
+    return strtr($url, $converter);
+}
