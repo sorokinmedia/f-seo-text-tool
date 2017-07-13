@@ -22,10 +22,12 @@ function saveArticleTextByPOSTQuery(){
     }
 
     jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
-        console.log(response)
         jQuery.post('http://api.workhard.kosmoz.online/v1/common/wamble/text', {text : response[0]}, function(answer){
+
             var url = 'http://workhard.kosmoz.online/tools/seo?text_id=' + answer.response
-            var win = window.open(url)
+
+            window.open(url)
+
         },"json")
     },"json")
 }

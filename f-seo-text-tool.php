@@ -94,7 +94,7 @@ function isValidTextToolPage(){
 function fseo_tt_get_post_text_by_id(){
     $post_id = $_POST['post'];
     $text = get_post($post_id)->post_content;
-    $url = 'http://api.workhard.kosmoz.online/v1/common/wamble/text';
+    //$url = 'http://api.workhard.kosmoz.online/v1/common/wamble/text';
 
     /*$queryPost = wp_remote_post($url, array(
         'text' => $text,
