@@ -72,7 +72,7 @@ function add_wp_admin_bar_new_item() {
         $wp_admin_bar->add_menu(array(
             'id' => 'who_tools_seo_link',
             'title' => __('Анализ текста'),
-            'href' => 'https://workhard.online/tools/seo?text_key=' . $text_key,
+            'href' => 'https://workhard.online/tools/seo',
             'meta' => array(
                 'target' => '_blank',
                 'class' => 'who_link'
@@ -94,7 +94,14 @@ function isValidTextToolPage(){
 function fseo_tt_get_post_text_by_id(){
     $post_id = $_POST['post'];
     $text = get_post($post_id)->post_content;
-    echo json_encode($text);
+    $url = 'http://api.workhard.kosmoz.online/v1/common/wamble/text';
+
+    /*$queryPost = wp_remote_post($url, array(
+        'text' => $text,
+        'type' => 1
+    ));*/
+
+    echo json_encode([$text]);//$queryPost['body'];
     die();
 }
 add_action('wp_ajax_fseo_tt_get_post_text_by_id', 'fseo_tt_get_post_text_by_id' );

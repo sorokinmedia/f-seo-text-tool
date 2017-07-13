@@ -1,8 +1,8 @@
 jQuery(document).ready(function(){
 
     jQuery('.who_link a').click(function (e) {
-
-        location.pathname === '/wp-admin/post.php' ? saveArticleText() : saveArticleTextByPOSTQuery()
+        e.preventDefault()
+        saveArticleTextByPOSTQuery()
     })
 })
 
@@ -10,9 +10,11 @@ jQuery(document).ready(function(){
 
 function saveArticleTextByPOSTQuery(){
 
-    var locParams = getUrlParameters(jQuery('#wp-admin-bar-edit a')
+    var isAdmin = location.pathname ===  '/wp-admin/post.php'
+    var urlParStr = isAdmin ? location.search.substr(1) : jQuery('#wp-admin-bar-edit a')
         .attr('href')
-        .replace(location.origin + '/wp-admin/post.php?', ''));
+        .replace(location.origin + '/wp-admin/post.php?', '')
+    var locParams = getUrlParameters(urlParStr);
 
     var data = {
         'action' : 'fseo_tt_get_post_text_by_id',
@@ -20,17 +22,17 @@ function saveArticleTextByPOSTQuery(){
     }
 
     jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
-        localStorage.setItem(location.host.replace('.', '_') + '_' + locParams.post, response)
+        console.log(response)
+        jQuery.post('http://api.workhard.kosmoz.online/v1/common/wamble/text', {text : response[0]}, function(answer){
+            var url = 'http://workhard.kosmoz.online/tools/seo?text_id=' + answer.response
+            var win = window.open(url)
+        },"json")
     },"json")
 }
 
 function saveArticleText() {
-
-    var locParams = getUrlParameters(location.search.replace('?', ''))
-
-    localStorage.setItem(location.host.replace('.', '_') + '_' + locParams.post, jQuery('textarea#content').val())
+    setMessage(jQuery('textarea#content').val())
 }
-
 
 function getUrlParameters(query) {
 
