@@ -32,10 +32,6 @@ function saveArticleTextByPOSTQuery(){
     },"json")
 }
 
-function saveArticleText() {
-    setMessage(jQuery('textarea#content').val())
-}
-
 function getUrlParameters(query) {
 
     var result = {};
