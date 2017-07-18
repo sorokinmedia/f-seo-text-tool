@@ -23,7 +23,7 @@ function sendArticleTextByPOSTQuery(){
     jQuery.post('/wp-admin/admin-ajax.php', wpData, function(response){
         var whoData = {
             text : response[0],
-            url : location.origin,
+            url : location.href,
             wp_post_id :  locParams.post
         };
         jQuery.post('https://api.workhard.online/v1/common/wamble/text', whoData, function(answer){
