@@ -14,14 +14,19 @@ function sendArticleTextByPOSTQuery(){
         .replace(location.origin + '/wp-admin/post.php?', '');
     var locParams = getUrlParameters(urlParStr);
 
-    var data = {
+    var wpData = {
         'action' : 'fseo_tt_get_post_text_by_id',
         'post' : locParams.post
     }
 
     //send post to get post id, then send post to save text
-    jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
-        jQuery.post('https://api.workhard.online/v1/common/wamble/text', {text : response[0]}, function(answer){
+    jQuery.post('/wp-admin/admin-ajax.php', wpData, function(response){
+        var whoData = {
+            text : response[0],
+            url : location.origin,
+            wp_post_id :  locParams.post
+        };
+        jQuery.post('https://api.workhard.online/v1/common/wamble/text', whoData, function(answer){
 
             var url = 'https://workhard.online/tools/seo?text_id=' + answer.response;
 
