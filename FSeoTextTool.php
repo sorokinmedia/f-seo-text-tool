@@ -7,27 +7,9 @@ class FSeoTextTool
 
     public function __construct()
     {
-        add_action( 'admin_head', [$this,'f_seo_text_tool_init'] );
         add_action('wp_enqueue_scripts', [$this, 'f_seo_text_tool_enqueue_scripts']);
         add_action('wp_before_admin_bar_render', [$this,'add_wp_admin_bar_new_item']);
         add_action('wp_ajax_fseo_tt_get_post_text_by_id', [$this, 'fseo_tt_get_post_text_by_id'] );
-
-    }
-
-    /**Подключаем JS скрипт и стили**/
-    public function f_seo_text_tool_init(){
-        $type = get_post_type((int) get_the_ID());
-        var_dump($type);
-        if($type != 'post') return null;
-
-        wp_enqueue_style(
-            'text_tool_style',
-            plugins_url('css/text_tool_style.css', __FILE__),
-            null,
-            self::F_SEO_TEXT_TOOL_CURRENT_VERSION,
-            'all'
-        );
-        wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
 
     }
 
@@ -35,13 +17,6 @@ class FSeoTextTool
 
         if(!is_user_logged_in()) return null;
 
-        wp_enqueue_style(
-            'text_tool_style',
-            plugins_url('css/text_tool_style.css', __FILE__),
-            null,
-            self::F_SEO_TEXT_TOOL_CURRENT_VERSION,
-            'all'
-        );
         wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
     }
 
@@ -79,7 +54,7 @@ class FSeoTextTool
     function fseo_tt_get_post_text_by_id(){
         $post_id = $_POST['post'];
         $text = get_post($post_id)->post_content;
-
+        
         echo json_encode([$text]);
         die();
     }
