@@ -1,11 +1,13 @@
 jQuery(document).ready(function(){
     jQuery('.who_link a').click(function (e) {
         e.preventDefault()
-        saveArticleTextByPOSTQuery()
+        sendArticleTextByPOSTQuery()
     })
 })
 
-function saveArticleTextByPOSTQuery(){
+
+function sendArticleTextByPOSTQuery(){
+    //getting url params
     var isAdmin = location.pathname ===  '/wp-admin/post.php'
     var urlParStr = isAdmin ? location.search.substr(1) : jQuery('#wp-admin-bar-edit a')
         .attr('href')
@@ -17,6 +19,7 @@ function saveArticleTextByPOSTQuery(){
         'post' : locParams.post
     }
 
+    //send post to get post id, then send post to save text
     jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
         jQuery.post('https://api.workhard.online/v1/common/wamble/text', {text : response[0]}, function(answer){
 
@@ -28,6 +31,10 @@ function saveArticleTextByPOSTQuery(){
     },"json")
 }
 
+
+/*
+* Parse URL params
+* */
 function getUrlParameters(query) {
     var result = {};
 
