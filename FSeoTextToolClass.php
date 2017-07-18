@@ -3,7 +3,7 @@
 /**
  * Class FSeoTextTool
  */
-class FSeoTextTool
+class FSeoTextToolClass
 {
     const F_SEO_TEXT_TOOL_CURRENT_VERSION = '1.0'; // текущая версия
 

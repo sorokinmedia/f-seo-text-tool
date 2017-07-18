@@ -7,7 +7,7 @@ Version: 1.0
 Author URI: http://f-seo.ru/
 */
 
-include 'FSeoTextTool.php';
+include 'FSeoTextToolClass.php';
 
-new FSeoTextTool();
+new FSeoTextToolClass();
 
