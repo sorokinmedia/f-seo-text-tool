@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class FSeoTextTool
  */
@@ -15,7 +14,6 @@ class FSeoTextToolClass
         add_action('wp_enqueue_scripts', [$this, 'f_seo_text_tool_enqueue_scripts']);
         add_action('wp_before_admin_bar_render', [$this,'add_wp_admin_bar_new_item']);
         add_action('wp_ajax_fseo_tt_get_post_text_by_id', [$this, 'fseo_tt_get_post_text_by_id'] );
-
     }
     /*
      * initialize scripts
