@@ -1,15 +1,11 @@
 jQuery(document).ready(function(){
-
     jQuery('.who_link a').click(function (e) {
         e.preventDefault()
         saveArticleTextByPOSTQuery()
     })
 })
 
-
-
 function saveArticleTextByPOSTQuery(){
-
     var isAdmin = location.pathname ===  '/wp-admin/post.php'
     var urlParStr = isAdmin ? location.search.substr(1) : jQuery('#wp-admin-bar-edit a')
         .attr('href')
@@ -33,7 +29,6 @@ function saveArticleTextByPOSTQuery(){
 }
 
 function getUrlParameters(query) {
-
     var result = {};
 
     query.split("&").forEach(function(part) {
