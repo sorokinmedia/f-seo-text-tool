@@ -28,7 +28,7 @@ class FSeoTextToolClass
         wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
     }
 
-    /*
+    /**
      * Подключаем скрипты на сайте
      */
     public function f_seo_text_tool_enqueue_scripts()
@@ -96,5 +96,4 @@ class FSeoTextToolClass
         $converter = ['http://' => '', 'https://' => '', '.' => '_'];
         return strtr($url, $converter);
     }
-
 }
