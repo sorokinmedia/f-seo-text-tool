@@ -18,9 +18,9 @@ function saveArticleTextByPOSTQuery(){
     }
 
     jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
-        jQuery.post('http://api.workhard.kosmoz.online/v1/common/wamble/text', {text : response[0]}, function(answer){
+        jQuery.post('https://api.workhard.online/v1/common/wamble/text', {text : response[0]}, function(answer){
 
-            var url = 'http://workhard.kosmoz.online/tools/seo?text_id=' + answer.response
+            var url = 'https://workhard.online/tools/seo?text_id=' + answer.response
 
             window.open(url)
 
