@@ -1,23 +1,17 @@
 jQuery(document).ready(function(){
-
     jQuery('.who_link a').click(function (e) {
         e.preventDefault()
-        sendArticleTextByPOSTQuery()
+        saveArticleTextByPOSTQuery()
     })
 })
 
-
-
-function sendArticleTextByPOSTQuery(){
-
-    // getting url params
+function saveArticleTextByPOSTQuery(){
     var isAdmin = location.pathname ===  '/wp-admin/post.php'
     var urlParStr = isAdmin ? location.search.substr(1) : jQuery('#wp-admin-bar-edit a')
         .attr('href')
         .replace(location.origin + '/wp-admin/post.php?', '')
     var locParams = getUrlParameters(urlParStr);
 
-    //send query to get post id, then send query to save text
     var data = {
         'action' : 'fseo_tt_get_post_text_by_id',
         'post' : locParams.post
@@ -34,12 +28,7 @@ function sendArticleTextByPOSTQuery(){
     },"json")
 }
 
-
-/**
- * Parse url parameters
- * **/
 function getUrlParameters(query) {
-
     var result = {};
 
     query.split("&").forEach(function(part) {

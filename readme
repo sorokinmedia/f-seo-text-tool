@@ -1,8 +1,36 @@
 === F-seo Text Tool ===
-Contributors: Valeriy Rysin
-Tags: google, images, autoload
-Donate link: http://qandaforum.trevorpythag.co.uk
-Requires at least: 1.0
-Tested up to: 1.0
+Contributors: Рысин Валерий
+Tags: seo, workhard, f-seo
+Requires at least: 4.8
+Tested up to: 4.8
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Плагин подсветки ключевых слов в редакторе Wordpress , FAQ
+Плагин добавляет интерфейс для оперативного SEO анализа текста на Workhard.online
+
+== Description ==
+
+Плагин добавляет интерфейс для оперативного SEO анализа текста на Workhard.online
+
+**Ссылка на сервис:** https://workhard.online/seo/tools
+**Пишите тексты? Работайте с нами!** https://workhard.online/landing
+**Краткая справка по работе с Workhard.online** https://workhard.online/user/faq/view
+
+== Installation ==
+
+1. Установите плагин любым удобным способом
+2. Активируйте плагин
+3. В админ баре появится ссылка, которая позволит отправит текст в сервис анализа на workhard.online
+
+== Frequently Asked Questions ==
+
+Справка в разработке ;-)
+
+== Screenshots ==
+
+
+
+== Changelog ==
+
+= 1.0 =
+* Первая и, возможно, последняя версия плагина
