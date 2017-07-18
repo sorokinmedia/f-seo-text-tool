@@ -1,13 +1,11 @@
 jQuery(document).ready(function(){
     jQuery('.who_link a').click(function (e) {
         e.preventDefault();
-        sendArticleTextByPOSTQuery()
+        sendArticleTextByPOSTQuery();
     })
-});
+})
 
-/**
- * отправка текста в сервис
- */
+
 function sendArticleTextByPOSTQuery(){
     //getting url params
     var isAdmin = location.pathname ===  '/wp-admin/post.php';
@@ -19,26 +17,24 @@ function sendArticleTextByPOSTQuery(){
     var data = {
         'action' : 'fseo_tt_get_post_text_by_id',
         'post' : locParams.post
-    };
+    }
 
     //send post to get post id, then send post to save text
     jQuery.post('/wp-admin/admin-ajax.php', data, function(response){
-        jQuery.post('https://api.workhard.online/v1/common/wamble/text', {text : response[0]}, function(answer){
+        jQuery.post('http://api.workhard.kosmoz.online/v1/common/wamble/text', {text : response[0]}, function(answer){
 
-            var url = 'https://workhard.online/tools/seo?text_id=' + answer.response;
+            var url = 'http://workhard.kosmoz.online/tools/seo?text_id=' + answer.response;
 
-            window.open(url)
+            window.open(url);
 
-        },"json")
-    },"json")
+        },"json");
+    },"json");
 }
 
 
-/**
- * парсинг параметров URL
- * @param query
- * @returns {{}}
- */
+/*
+* Parse URL params
+* */
 function getUrlParameters(query) {
     var result = {};
 

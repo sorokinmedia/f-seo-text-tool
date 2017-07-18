@@ -11,19 +11,28 @@ class FSeoTextToolClass
      */
     public function __construct()
     {
+        add_action('admin_head', [$this,'f_seo_text_tool_init'] );
         add_action('wp_enqueue_scripts', [$this, 'f_seo_text_tool_enqueue_scripts']);
         add_action('wp_before_admin_bar_render', [$this,'add_wp_admin_bar_new_item']);
         add_action('wp_ajax_fseo_tt_get_post_text_by_id', [$this, 'fseo_tt_get_post_text_by_id'] );
     }
-    /*
-     * initialize scripts
-     * */
-    public function f_seo_text_tool_enqueue_scripts()
+
+    /**
+     * Подключаем JS скрипт и стили в админке
+     */
+    public function f_seo_text_tool_init()
     {
         $type = get_post_type((int) get_the_ID());
-
         if($type != 'post') return null;
 
+        wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
+    }
+
+    /*
+     * Подключаем скрипты на сайте
+     */
+    public function f_seo_text_tool_enqueue_scripts()
+    {
         if(!is_user_logged_in()) return null;
 
         wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
