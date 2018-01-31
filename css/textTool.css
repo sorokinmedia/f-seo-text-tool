@@ -1,0 +1,49 @@
+.comment-manage-button {
+    display: block;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    width: 100px;
+    height: 30px;
+    text-decoration: none !important;
+    transition: .2s;
+    color: #fff;
+    border: none;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.comment-manage-button.blue {
+    background: rgba(19, 68, 134, 0.95);
+}
+
+.comment-manage-button.red {
+    background: #c0bebb;
+    color: #000;
+}
+span.extended {
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.comment-meta {
+    display: block;
+    clear: both;
+}
+.comment-meta a, .comment-meta button {
+    display: inline-block;
+    float: left;
+}
+
+.comment-reply-link {
+    clear: none;
+    margin-right: 10px;
+}
+
+.comment-content-text textarea {
+    width: 95%;
+    resize: none;
+    overflow-y: auto;
+    display: block;
+    margin-bottom: 10px;
+}

@@ -15,6 +15,9 @@ class FSeoTextToolClass
         add_action('wp_enqueue_scripts', [$this, 'f_seo_text_tool_enqueue_scripts']);
         add_action('wp_before_admin_bar_render', [$this,'add_wp_admin_bar_new_item']);
         add_action('wp_ajax_fseo_tt_get_post_text_by_id', [$this, 'fseo_tt_get_post_text_by_id'] );
+        add_action('wp_ajax_fseo_tt_update_comment', [$this, 'fseo_tt_update_comment'] );
+        add_action('wp_ajax_fseo_tt_delete_comment', [$this, 'fseo_tt_delete_comment'] );
+        add_action('wp_ajax_fseo_tt_is_valid_user', [$this, 'fseo_tt_is_valid_user'] );
     }
 
     /**
@@ -26,6 +29,7 @@ class FSeoTextToolClass
         if($type != 'post') return null;
 
         wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
+        wp_enqueue_style('text_tool_style', plugins_url( 'css/textTool.css', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
     }
 
     /**
@@ -36,6 +40,7 @@ class FSeoTextToolClass
         if(!is_user_logged_in()) return null;
 
         wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
+        wp_enqueue_style('text_tool_style', plugins_url( 'css/textTool.css', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
     }
 
     /**
@@ -80,10 +85,28 @@ class FSeoTextToolClass
     function fseo_tt_get_post_text_by_id()
     {
         $post_id = $_POST['post'];
-        $text = get_post($post_id)->post_content;
+        $post = get_post($post_id);
+        $comments = get_comments(['post_id' => $post_id]);
+        $text = $post->post_content;
+        $comments_content = $this->build_comments_string($comments);
 
-        echo json_encode([$text]);
+        echo json_encode([$text . $comments_content]);
         die();
+    }
+
+    /**
+     * @param array $comments
+     * @return string
+     */
+    function build_comments_string(array $comments) : string
+    {
+        $res = '';
+        foreach($comments as $comment)
+        {
+            $res.= "\n\r" . $comment->comment_content;
+        }
+
+        return $res;
     }
 
     /**
@@ -95,5 +118,50 @@ class FSeoTextToolClass
     {
         $converter = ['http://' => '', 'https://' => '', '.' => '_'];
         return strtr($url, $converter);
+    }
+
+    /**
+     * Update post comment by ajax
+     */
+    function fseo_tt_update_comment()
+    {
+        $id = $_POST['commentId'];
+        $content = $_POST['commentContent'];
+        $comment = get_comment($id, ARRAY_A);
+        $comment['comment_content'] = $content;
+
+        $res = wp_update_comment($comment);
+
+        echo json_encode(['status' => $res ? 'success' : 'fail']);
+        die();
+    }
+
+    /**
+     * Delete post comment by ajax
+     */
+    function fseo_tt_delete_comment()
+    {
+        $id = $_POST['commentId'];
+        $res = wp_delete_comment($id);
+
+        echo json_encode(['status' => $res ? 'success' : 'fail']);
+        die();
+    }
+
+    function fseo_tt_is_valid_user() {
+        $res = $this->checkUserRole('wambleChecker');
+
+        echo json_encode(['status' => $res ? 'success' : 'fail']);
+        die();
+    }
+
+    public function checkUserRole( $role, $user_id = null ) {
+        if ( is_numeric( $user_id ) )
+            $user = get_userdata( $user_id );
+        else
+            $user = wp_get_current_user();
+        if ( empty( $user ) )
+            return false;
+        return in_array( $role, (array) $user->roles );
     }
 }
