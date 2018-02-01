@@ -55,7 +55,7 @@ function extendCommentsInterface() {
         'action' : 'fseo_tt_is_valid_user'
     };
     jQuery.post('/wp-admin/admin-ajax.php', wpData, function(response) {
-        console.log(response);
+        console.log('CHECK',response);
         if(response.status === "success") {
             jQuery('#comments .comment-list .comment .comment-meta').each(function (index, elem) {
                 var comment = Number(jQuery(jQuery(elem).parent())

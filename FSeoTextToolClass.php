@@ -84,10 +84,15 @@ class FSeoTextToolClass
      */
     function fseo_tt_get_post_text_by_id()
     {
+        global $wpdb;
         $post_id = $_POST['post'];
         $post = get_post($post_id);
-        $comments = get_comments(['post_id' => $post_id]);
-        $text = $post->post_content;
+        $text = $post->post_title . " \n" . $post->post_content;
+        $query = 'select c.comment_ID, c.comment_content from wp_comments as c
+                  where c.comment_post_ID = %d AND c.comment_approved=1';
+
+        $comments = $wpdb->get_results( $wpdb->prepare($query, $post_id), ARRAY_A );
+
         $comments_content = $this->build_comments_string($comments);
 
         echo json_encode([$text . $comments_content]);
@@ -103,7 +108,7 @@ class FSeoTextToolClass
         $res = '';
         foreach($comments as $comment)
         {
-            $res.= "\n\r" . $comment->comment_content;
+            $res.= "\n\r" . $comment['comment_content'];
         }
 
         return $res;
@@ -151,7 +156,9 @@ class FSeoTextToolClass
     function fseo_tt_is_valid_user() {
         $res = $this->checkUserRole('wambleChecker');
 
-        echo json_encode(['status' => $res ? 'success' : 'fail']);
+        $role = get_role('wambleChecker');
+
+        echo json_encode(['status' => $res ? 'success' : 'fail', 'role' => $role]);
         die();
     }
 
