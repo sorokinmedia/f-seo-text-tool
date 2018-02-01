@@ -49,6 +49,9 @@ function sendArticleTextByPOSTQuery() {
 /**
  * Управление комментариями
  */
+
+//точка входа в упрвлении комментами, проверяет роль,
+// если валидная то добавляет интерфейс для редактирования комментов
 function extendCommentsInterface() {
     console.log("Extending comments interface...");
     var wpData = {
@@ -69,6 +72,7 @@ function extendCommentsInterface() {
 
 }
 
+//генерирует html для управления коммениариями
 function generateExtendedInterFace(comment) {
     return '<span class="extended">' +
         '<button ' +
@@ -83,14 +87,17 @@ function generateExtendedInterFace(comment) {
     '</span>'
 }
 
+//удаляет интерфейс для управления комментарием по id
 function hideCommentInterfaceById(id) {
     jQuery('#comment-' + id + ' span.extended').remove()
 }
 
+// добавляет интерфейс для управления комментарием по id
 function extendCommentsInterfaceById(id) {
     jQuery('#li-comment-' + id + ' .comment-meta').append(generateExtendedInterFace(id))
 }
 
+//обработчик кнопки Изсменить
 function changeCommentClick(id) {
     hideCommentInterfaceById(id);
 
@@ -109,12 +116,13 @@ function changeCommentClick(id) {
         'onclick="setCommentHtml(' + id + ')">Отмена</button>' +
     '</div>')
 }
-
+//обработчик кнопки удалить
 function handleDeleteCommentClick(id) {
     var conf = confirm('Хотитие удалить комментарий ' + id + ' ?');
     if(conf) deleteComment(id)
 }
 
+//удаление коммента
 function deleteComment(id) {
     var wpData = {
         'action' : 'fseo_tt_delete_comment',
@@ -126,7 +134,7 @@ function deleteComment(id) {
         if(response.status === "success") jQuery("#li-comment-" + id).remove();
     },"json");
 }
-
+//обработчик кнопки сохоранить
 function updateComment(id) {
     var commentContent = jQuery("#li-comment-" + id + " .comment-content-text-input").val();
     var wpData = {
@@ -145,6 +153,7 @@ function updateComment(id) {
     },"json");
 }
 
+//возрващает прежнний html коммента
 function setCommentHtml(id, commentContent) {
     var contentElem = jQuery("#li-comment-" + id)
         .find(".comment-content .comment-content-text ");
@@ -152,7 +161,7 @@ function setCommentHtml(id, commentContent) {
     jQuery(contentElem)
         .html('<p>' + text.replace(/\n/g, '\n<br/>') + '</p>');
 
-    extendCommentsInterfaceById(id)
+    extendCommentsInterfaceById(id);
 }
 
 /*
