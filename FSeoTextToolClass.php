@@ -105,7 +105,7 @@ class FSeoTextToolClass
      */
     function build_comments_string(array $comments) : string
     {
-        $res = '';
+        $res = "\n\r----------------------------------------------------------------------\n\r";
         foreach($comments as $comment)
         {
             $res.= "\n\r" . $comment['comment_content'];
