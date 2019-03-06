@@ -39,8 +39,8 @@ class FSeoTextToolClass
     {
         if(!is_user_logged_in()) return null;
 
-        wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
-        wp_enqueue_style('text_tool_style', plugins_url( 'css/textTool.css', __FILE__ ), false, self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
+        wp_enqueue_script('text_tool', plugins_url( 'js/text_tool.js', __FILE__ ), [], self::F_SEO_TEXT_TOOL_CURRENT_VERSION, true);
+        wp_enqueue_style('text_tool_style', plugins_url( 'css/textTool.css', __FILE__ ), [], self::F_SEO_TEXT_TOOL_CURRENT_VERSION);
     }
 
     /**
