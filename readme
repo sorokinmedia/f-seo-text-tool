@@ -1,8 +1,8 @@
 === F-seo Text Tool ===
-Contributors: Рысин Валерий
+Contributors: Valeriy Rysin
 Tags: seo, workhard, f-seo
-Requires at least: 4.8
-Tested up to: 4.8
+Requires at least: 5.1
+Tested up to: 5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,24 +13,19 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Плагин добавляет интерфейс для оперативного SEO анализа текста на Workhard.online
 
 **Ссылка на сервис:** https://workhard.online/seo/tools
-**Пишите тексты? Работайте с нами!** https://workhard.online/landing
+**Пишите тексты? Работайте с нами!** https://workhard.online/customers
 **Краткая справка по работе с Workhard.online** https://workhard.online/user/faq/view
 
 == Installation ==
 
 1. Установите плагин любым удобным способом
 2. Активируйте плагин
-3. В админ баре появится ссылка, которая позволит отправит текст в сервис анализа на workhard.online
-
-== Frequently Asked Questions ==
-
-Справка в разработке ;-)
-
-== Screenshots ==
-
-
+3. В админ баре появится ссылка, которая позволит отправить текст в сервис анализа на workhard.online
 
 == Changelog ==
 
+= 1.1 =
+* убрана кнопка в админ баре при просмотре статьи на сайте, оставлена в админке
+* небольшие улучшения
 = 1.0 =
 * Первая и, возможно, последняя версия плагина

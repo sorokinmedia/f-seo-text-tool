@@ -3,13 +3,9 @@ jQuery(document).ready(function() {
         e.preventDefault();
         sendArticleTextByPOSTQuery();
     });
-
-
-    //setTimeout(function () {
-        if(jQuery('#wp-admin-bar-who_tools_seo_link')) {
-            extendCommentsInterface()
-        }
-    //},1000)
+    if(jQuery('#wp-admin-bar-who_tools_seo_link')) {
+        extendCommentsInterface()
+    }
 });
 
 /**
@@ -50,8 +46,8 @@ function sendArticleTextByPOSTQuery() {
  * Управление комментариями
  */
 
-//точка входа в упрвлении комментами, проверяет роль,
-// если валидная то добавляет интерфейс для редактирования комментов
+// точка входа в управлении комментами, проверяет роль,
+// если валидная, то добавляет интерфейс для редактирования комментов
 function extendCommentsInterface() {
     console.log("Extending comments interface...");
     var wpData = {
@@ -72,7 +68,7 @@ function extendCommentsInterface() {
 
 }
 
-//генерирует html для управления коммениариями
+//генерирует html для управления комменитариями
 function generateExtendedInterFace(comment) {
     return '<span class="extended">' +
         '<button ' +
@@ -87,7 +83,7 @@ function generateExtendedInterFace(comment) {
     '</span>'
 }
 
-//удаляет интерфейс для управления комментарием по id
+// удаляет интерфейс для управления комментарием по id
 function hideCommentInterfaceById(id) {
     jQuery('#comment-' + id + ' span.extended').remove()
 }
@@ -97,7 +93,7 @@ function extendCommentsInterfaceById(id) {
     jQuery('#li-comment-' + id + ' .comment-meta').append(generateExtendedInterFace(id))
 }
 
-//обработчик кнопки Изсменить
+// обработчик кнопки изменить
 function changeCommentClick(id) {
     hideCommentInterfaceById(id);
 
@@ -116,6 +112,7 @@ function changeCommentClick(id) {
         'onclick="setCommentHtml(' + id + ')">Отмена</button>' +
     '</div>')
 }
+
 //обработчик кнопки удалить
 function handleDeleteCommentClick(id) {
     var conf = confirm('Хотитие удалить комментарий ' + id + ' ?');
@@ -134,7 +131,8 @@ function deleteComment(id) {
         if(response.status === "success") jQuery("#li-comment-" + id).remove();
     },"json");
 }
-//обработчик кнопки сохоранить
+
+//обработчик кнопки сохранить
 function updateComment(id) {
     var commentContent = jQuery("#li-comment-" + id + " .comment-content-text-input").val();
     var wpData = {
@@ -164,9 +162,7 @@ function setCommentHtml(id, commentContent) {
     extendCommentsInterfaceById(id);
 }
 
-/*
-* Parse URL params
-* */
+// Parse URL params
 function getUrlParameters(query) {
     var result = {};
 
