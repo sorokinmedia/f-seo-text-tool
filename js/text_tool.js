@@ -32,7 +32,7 @@ function sendArticleTextByPOSTQuery() {
             url : location.origin,
             wp_post_id :  locParams.post
         };
-        jQuery.post('https://api.workhard.online/v1/common/wamble/text', whoData, function(answer){
+        jQuery.post('https://api.workhard.online/v2/common/wamble/text', whoData, function(answer){
 
             var url = 'https://workhard.online/tools/seo?text_id=' + answer.response;
 
